@@ -164,6 +164,8 @@ docker compose up --build
 ```
  
 This starts `cairn-server` on port `8000` and `cairn-dispatcher` once the server passes its health check. The dispatcher mounts `dispatch.yaml` from the project root and connects to Docker via the host socket. Data is persisted to `./datas/cairn/`.
+
+安全边界：Compose 默认只将管理 API 发布到宿主机 `127.0.0.1:8000`。当前 API 没有内置身份认证；远程使用应通过带认证的 HTTPS 反向代理，不要直接改成 `8000:8000`。回环绑定不能隔离本机其他用户或同一 Docker 网络中的容器。调度器需要宿主机 Docker socket，其权限接近宿主机管理员；只应在受信任的隔离主机上使用。这项配置修改不等于新增了 API 鉴权。
  
 ### Manual
  
