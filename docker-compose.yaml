@@ -6,7 +6,8 @@ services:
     image: cairn-app
     container_name: cairn-server
     ports:
-      - "8000:8000"
+      # 管理 API 没有内置鉴权，默认只向宿主机回环地址发布。
+      - "127.0.0.1:8000:8000"
     volumes:
       - ./datas/cairn/:/root/.local/share/cairn/
     healthcheck:
